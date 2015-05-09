@@ -38,4 +38,3 @@ RUN chmod 700 /usr/local/bin/activator.sh
 RUN mkdir /keys
 
 WORKDIR /gopath
-ENTRYPOINT ["/usr/local/bin/activator.sh"]
