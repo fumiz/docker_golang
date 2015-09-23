@@ -8,24 +8,24 @@ RUN apt-get update && \
      rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
 
 # make GOROOT
-ADD https://storage.googleapis.com/golang/go1.4.2.linux-amd64.tar.gz /tmp/go1.4.2.linux-amd64.tar.gz
+ADD https://storage.googleapis.com/golang/go1.5.1.linux-amd64.tar.gz /tmp/go1.5.1.linux-amd64.tar.gz
 RUN cd /tmp && \
-    echo "5020af94b52b65cc9b6f11d50a67e4bae07b0aff go1.4.2.linux-amd64.tar.gz" > go1.4.2.linux-amd64.tar.gz.sha1 && \
-    sha1sum -c go1.4.2.linux-amd64.tar.gz.sha1 && \
-    rm go1.4.2.linux-amd64.tar.gz.sha1
+    echo "46eecd290d8803887dec718c691cc243f2175fe0 go1.5.1.linux-amd64.tar.gz" > go1.5.1.linux-amd64.tar.gz.sha1 && \
+    sha1sum -c go1.5.1.linux-amd64.tar.gz.sha1 && \
+    rm go1.5.1.linux-amd64.tar.gz.sha1
 RUN cd /tmp && \
-    tar zxf go1.4.2.linux-amd64.tar.gz && \
+    tar zxf go1.5.1.linux-amd64.tar.gz && \
     mv go / && \
-    rm go1.4.2.linux-amd64.tar.gz
+    rm go1.5.1.linux-amd64.tar.gz
 ENV GOROOT /go
 ENV PATH /go/bin:$PATH
 
 RUN cd $(go env GOROOT)/src && \
-    GOOS=linux   GOARCH=386   ./make.bash && \
-    GOOS=linux   GOARCH=arm   ./make.bash && \
-    GOOS=linux   GOARCH=amd64 ./make.bash && \
-    GOOS=darwin  GOARCH=amd64 ./make.bash && \
-    GOOS=windows GOARCH=amd64 ./make.bash
+    GOOS=linux   GOARCH=386   go install std && \
+    GOOS=linux   GOARCH=arm   go install std && \
+    GOOS=linux   GOARCH=amd64 go install std && \
+    GOOS=darwin  GOARCH=amd64 go install std && \
+    GOOS=windows GOARCH=amd64 go install std
 
 RUN mkdir /gopath && \
     mkdir /gopath/bin && \
